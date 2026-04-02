@@ -1,5 +1,7 @@
 package com.example.broadcastreceiverapp;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -9,6 +11,27 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Receiver receiver;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        receiver = new Receiver();
+        IntentFilter filter = new IntentFilter(Intent.ACTION_USER_PRESENT);
+
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        unregisterReceiver(receiver);
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
